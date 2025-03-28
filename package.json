@@ -39,6 +39,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/three": "^0.174.0",
     "daisyui": "^4.12.23",
     "eslint": "^9",
     "eslint-config-next": "15.1.7",

@@ -7,14 +7,11 @@ export const useSmoothScroll = () => {
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.4,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(1 - t, 4)),
-      smooth: true,
-      direction: "vertical",
-      gestureDirection: "vertical",
-      smoothTouch: false,
-      touchMultiplier: 2,
-      infinite: false,
+      lerp: 0.1, // Controls smoothness (lower values = smoother)
+      smoothWheel: true, // Enables smooth scrolling for mouse wheel
+      wheelMultiplier: 1, // Adjust wheel scroll speed
+      touchMultiplier: 2, // Adjust touch scroll speed
+      infinite: false, // Disable infinite scrolling
     });
 
     lenisRef.current = lenis;
@@ -32,30 +29,25 @@ export const useSmoothScroll = () => {
     };
   }, []);
 
-  // Function to scroll the global Lenis instance manually
   const scrollGlobal = (delta: number) => {
     if (lenisRef.current) {
       lenisRef.current.scrollTo(lenisRef.current.scroll + delta, {
         immediate: false,
-        duration: 0.1, // Small duration for smooth transition
+        duration: 0.1,
       });
     }
   };
 
   const applyToDiv = (element: HTMLElement | null) => {
     if (lenisRef.current && element) {
-      // Stop the default Lenis instance from controlling the page
       lenisRef.current.stop();
 
       const divLenis = new Lenis({
         wrapper: element,
-        content: element.querySelector(".scroll-content") || element,
-        duration: 1.4,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(1 - t, 4)),
-        smooth: true,
-        direction: "vertical",
-        gestureDirection: "vertical",
-        smoothTouch: false,
+       
+        lerp: 0.1,
+        smoothWheel: true,
+        wheelMultiplier: 1,
         touchMultiplier: 2,
         infinite: false,
       });
@@ -69,7 +61,7 @@ export const useSmoothScroll = () => {
 
       return () => {
         divLenis.destroy();
-        lenisRef.current?.start(); // Resume global Lenis when div-specific instance is destroyed
+        lenisRef.current?.start();
       };
     }
   };

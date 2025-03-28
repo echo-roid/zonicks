@@ -10,11 +10,6 @@ import {
   useAnimationFrame,
 } from "framer-motion";
 
-interface VelocityMapping {
-  input: [number, number];
-  output: [number, number];
-}
-
 interface VelocityTextProps {
   children: React.ReactNode;
   baseVelocity: number;
@@ -26,14 +21,9 @@ interface VelocityTextProps {
 }
 
 interface ScrollVelocityProps {
-  scrollContainerRef?: React.RefObject<HTMLElement>;
   texts: string[];
   velocity?: number;
   className?: string;
-  damping?: number;
-  stiffness?: number;
-  numCopies?: number;
-  velocityMapping?: VelocityMapping;
   parallaxClassName?: string;
   scrollerClassName?: string;
   parallaxStyle?: React.CSSProperties;
@@ -59,8 +49,7 @@ function useElementWidth(ref: React.RefObject<HTMLElement>): number {
 
 function wrap(min: number, max: number, v: number): number {
   const range = max - min;
-  const mod = (((v - min) % range) + range) % range;
-  return mod + min;
+  return (((v - min) % range) + range) % range + min;
 }
 
 const VelocityText = React.memo(function VelocityText({
@@ -79,16 +68,8 @@ const VelocityText = React.memo(function VelocityText({
 
   const { scrollY } = useScroll();
   const scrollVelocity = useVelocity(scrollY);
-  const smoothVelocity = useSpring(scrollVelocity, {
-    damping: 50,
-    stiffness: 400,
-  });
-  const velocityFactor = useTransform(
-    smoothVelocity,
-    [0, 1000],
-    [0, 5],
-    { clamp: false }
-  );
+  const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
+  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], { clamp: false });
 
   const x = useTransform(baseX, (v) => {
     if (copyWidth === 0) return "0px";
@@ -97,53 +78,43 @@ const VelocityText = React.memo(function VelocityText({
 
   useAnimationFrame((t, delta) => {
     let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
-
     if (velocityFactor.get() < 0) {
       directionFactor.current = -1;
     } else if (velocityFactor.get() > 0) {
       directionFactor.current = 1;
     }
-
     moveBy += directionFactor.current * moveBy * velocityFactor.get();
     baseX.set(baseX.get() + moveBy);
   });
 
   const textItems = (children as string).split(",").filter(Boolean);
 
-  const spans = [];
-  for (let i = 0; i < 6; i++) {
-    spans.push(
-      <span
-        className={`flex-shrink-0 flex space-x-4 ${className}`}
-        key={i}
-        ref={i === 0 ? copyRef : null}
-      >
-        {textItems.map((item, index) => (
-          <motion.span
-            key={`${i}-${index}`}
-            className="inline-block opacity-20 font-normal transition-all duration-200"
-            whileHover={{
-              opacity: 1,
-              scale: 1.05,
-            }}
-          >
-            {item}
-          </motion.span>
-        ))}
-      </span>
-    );
-  }
-
   return (
-    <div
-      className={`${parallaxClassName} relative overflow-hidden`}
-      style={parallaxStyle}
-    >
+    <div className={`${parallaxClassName} relative overflow-hidden`} style={parallaxStyle}>
       <motion.div
         className={`${scrollerClassName} flex whitespace-nowrap text-center font-sans text-4xl tracking-[-0.02em] drop-shadow md:text-[5rem] md:leading-[5rem]`}
         style={{ x, ...scrollerStyle }}
       >
-        {spans}
+        {Array.from({ length: 6 }).map((_, i) => (
+          <span
+            key={i}
+            className={`flex-shrink-0 flex space-x-4 ${className}`}
+            ref={i === 0 ? copyRef : undefined}
+          >
+            {textItems.map((item, index) => (
+              <motion.span
+                key={`${i}-${index}`}
+                className="inline-block opacity-20 font-normal transition-all duration-200"
+                whileHover={{
+                  opacity: 1,
+                  scale: 1.05,
+                }}
+              >
+                {item}
+              </motion.span>
+            ))}
+          </span>
+        ))}
       </motion.div>
     </div>
   );
@@ -152,7 +123,6 @@ const VelocityText = React.memo(function VelocityText({
 VelocityText.displayName = "VelocityText";
 
 export const ScrollVelocity: React.FC<ScrollVelocityProps> = ({
-  scrollContainerRef,
   texts = [],
   velocity = 100,
   className = "",

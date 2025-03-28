@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-// import { useRef } from 'react';
 import { TextHoverEffect } from "@/components/UI/text-hover-effect";
 import { SparklesCore } from "@/components/UI/sparkles";
 import HomeGeometric from "@/components/kokonutui/hero-geometric";
@@ -30,7 +29,7 @@ const content = [
     description:
       "See changes as they happen. With our platform, you can track every modification in real time. No more confusion about the latest version of your project. Say goodbye to the chaos of version control and embrace the simplicity of real-time updates.",
     content: (
-      <div className="h-full w-full  flex items-center justify-center text-white">
+      <div className="h-full w-full flex items-center justify-center text-white">
         <Image
           src="/linear.webp"
           width={300}
@@ -80,7 +79,7 @@ interface GridItemProps {
 const GridItem = ({ area, icon, title, description }: GridItemProps) => {
   return (
     <li className={`min-h-[14rem] list-none ${area}`}>
-      <div className="relative h-full rounded-2.5xl border  p-2  md:rounded-3xl md:p-3">
+      <div className="relative h-full rounded-2.5xl border p-2 md:rounded-3xl md:p-3">
         <GlowingEffect
           spread={40}
           glow={true}
@@ -88,19 +87,16 @@ const GridItem = ({ area, icon, title, description }: GridItemProps) => {
           proximity={64}
           inactiveZone={0.01}
         />
-        <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl border-0.75 p-6  dark:shadow-[0px_0px_27px_0px_#2D2D2D] shadow-[0px_0px_27px_0px_#2D2D2D] md:p-6">
+        <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl border-0.75 p-6 dark:shadow-[0px_0px_27px_0px_#2D2D2D] shadow-[0px_0px_27px_0px_#2D2D2D] md:p-6">
           <div className="relative flex flex-1 flex-col justify-between gap-3">
-            <div className="w-fit rounded-lg border border-gray-600 p-2 ">
+            <div className="w-fit rounded-lg border border-gray-600 p-2">
               {icon}
             </div>
             <div className="space-y-3">
               <h3 className="pt-0.5 text-xl/[1.375rem] font-semibold font-sans -tracking-4 md:text-2xl/[1.875rem] text-balance text-white dark:text-white">
                 {title}
               </h3>
-              <h2
-                className="[&_b]:md:font-semibold [&_strong]:md:font-semibold font-sans text-sm/[1.125rem] 
-              md:text-base/[1.375rem]  text-white dark:text-neutral-400"
-              >
+              <h2 className="[&_b]:md:font-semibold [&_strong]:md:font-semibold font-sans text-sm/[1.125rem] md:text-base/[1.375rem] text-white dark:text-neutral-400">
                 {description}
               </h2>
             </div>
@@ -120,18 +116,18 @@ const Home: React.FC = () => {
         {/* Background */}
         <div className="absolute inset-0 z-0">
           <HomeGeometric 
-            badge="Zonicks"
             title1=""
             title2=""
           />
         </div>
       </div>
+      
       {/* Rest of the Page Content */}
       <div className="items-center mx-auto flex flex-col relative z-15 overflow-hidden h-auto">
         <div className="flex items-center w-[80%] md:w-[50%] pt-20">
           <TextHoverEffect text="Your Best" />
         </div>
-        <h1 className="md:text-5xl text-4xl lg:text-7xl font-bold text-center text-white relative" >
+        <h1 className="md:text-5xl text-4xl lg:text-7xl font-bold text-center text-white relative">
           IT PARTNER
         </h1>
         <div className="w-[40rem] h-60 relative">
@@ -155,6 +151,7 @@ const Home: React.FC = () => {
           <div className="absolute inset-0 w-full h-full [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
         </div>
       </div>
+
       <motion.h1
         initial={{ opacity: 0.5, y: 100 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -188,16 +185,13 @@ const Home: React.FC = () => {
           icon={<Activity className="h-8 w-8 text-white dark:text-neutral-400" />}
           title="Digital Marketing"
           description={
-          <>
-          We help you reach your target audience and grow your business online.
-          <br />
-          <br />
-          <br />
-          {<CircleSmall className="inline-block h-4 w-4 text-white dark:text-neutral-400" />} SEO
-          <br />
-          {<CircleSmall className="inline-block h-4 w-4 text-white dark:text-neutral-400" />} Social Media Managing.....
-          <br />
-          </>
+            <>
+              We help you reach your target audience and grow your business online.
+              <br /><br />
+              {<CircleSmall className="inline-block h-4 w-4 text-white dark:text-neutral-400" />} SEO
+              <br />
+              {<CircleSmall className="inline-block h-4 w-4 text-white dark:text-neutral-400" />} Social Media Managing.....
+            </>
           }
         />
        
@@ -211,7 +205,7 @@ const Home: React.FC = () => {
         <GridItem
           area="md:[grid-area:3/1/4/13] xl:[grid-area:2/8/3/13]"
           icon={<Cog className="h-8 w-8 text-white dark:text-neutral-400" />}
-          title="Troubleshoting"
+          title="Troubleshooting"
           description="We provide expert troubleshooting services to quickly identify and resolve any issues that may arise."
         />
       </ul>  
@@ -234,14 +228,16 @@ const Home: React.FC = () => {
               duration: 0.8,
               ease: "easeInOut",
             }}
-            className="pb-12 bg-gradient-to-br from-slate-300 to-slate-500 py-0 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl">
+            className="pb-12 bg-gradient-to-br from-slate-300 to-slate-500 py-0 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
+          >
             TECHNOLOGIES
           </motion.h1>
           <ScrollVelocity
-            texts={[' Reactjs , Nextjs , Javascript,  , ',
-                    ' Wordpress , Laravel , Drupal,  , ',
-                    ' Reactnative , Php , Python , Django , Nextjs ,  , ']} 
-            
+            texts={[
+              'Reactjs, Nextjs, Javascript',
+              'Wordpress, Laravel, Drupal',
+              'Reactnative, Php, Python, Django, Nextjs'
+            ]} 
             velocity={30} 
             className="custom-scroll-text"
           />

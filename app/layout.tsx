@@ -1,17 +1,60 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+// import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/layout/header";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// Load Geist fonts locally
+// const geistSans = localFont({
+//   src: [
+//     {
+//       path: "../public/fonts/Geist/Geist-Regular.woff2",
+//       weight: "400",
+//       style: "normal",
+//     },
+//     {
+//       path: "../public/fonts/Geist/Geist-Medium.woff2",
+//       weight: "500",
+//       style: "normal",
+//     },
+//     {
+//       path: "../public/fonts/Geist/Geist-SemiBold.woff2",
+//       weight: "600",
+//       style: "normal",
+//     },
+//     {
+//       path: "../public/fonts/Geist/Geist-Bold.woff2",
+//       weight: "700",
+//       style: "normal",
+//     },
+//   ],
+//   variable: "--font-geist-sans",
+// });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const geistMono = localFont({
+//   src: [
+//     {
+//       path: "../public/fonts/Geist/GeistMono-Regular.woff2",
+//       weight: "400",
+//       style: "normal",
+//     },
+//     {
+//       path: "../public/fonts/Geist/GeistMono-Medium.woff2",
+//       weight: "500",
+//       style: "normal",
+//     },
+//     {
+//       path: "../public/fonts/Geist/GeistMono-SemiBold.woff2",
+//       weight: "600",
+//       style: "normal",
+//     },
+//     {
+//       path: "../public/fonts/Geist/GeistMono-Bold.woff2",
+//       weight: "700",
+//       style: "normal",
+//     },
+//   ],
+//   variable: "--font-geist-mono",
+// });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -26,7 +69,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#0A0A0A]`}>
+        className={` antialiased bg-[#0A0A0A]`}
+      >
         <Header />
         <main>{children}</main>
       </body>
